@@ -1,10 +1,10 @@
 package com.yuqijun.socket.server;
 
-import model.LsUser;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import jdk.internal.util.xml.impl.Input;
+import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -16,22 +16,65 @@ import java.util.List;
  *  接收客户端的连接、转发客户端的信息给其他客户端
  * */
 
-@Component
+@Slf4j
+//@Component
 public class SocketServer {
 
-    private List<LsUser> inLineUserList = new ArrayList<>();
+    private static final  int port = 9000;
 
-    @Bean
-    public void startTcpServerSocket () throws IOException {
+//    public static Map<String,Socket> inLineUserList = new HashMap<>();
+
+    public static List<Socket> inLineUserList = new ArrayList<>();
+
+//    @Bean
+    public static void  main (String [] args) throws IOException {
+        log.info("服务端开启："+ InetAddress.getLocalHost() +":"+port);
         /* 创建socket */
-        ServerSocket server = new ServerSocket(9000);
+        ServerSocket server = new ServerSocket(port);
         /* 遍历监听连接客户端 */
         for(;;){
+//            Socket client = server.accept();
+//            log.info(client.getInetAddress()+"请求连接服务器");
+//            /* 当有客户端连接时将客户端添加至客户端列表中 <集合> */
+//            addToUserInLineList(client);
+//            ServerHandler serverHandler = new ServerHandler(client);
+//            serverHandler.run();
+
+
             Socket client = server.accept();
-            /* 将客户端信息存入在线用户列表里面 */
+            inLineUserList.add(client);
+            log.info(client.getInetAddress()+"请求连接服务器");
+            ServerHandler serverHandler = new ServerHandler(client);
+            serverHandler.start();
+//            InputStream inputStream = client.getInputStream();
+//            BufferedReader bf = new BufferedReader(new InputStreamReader(inputStream));
+//            String s = bf.readLine();
+//            System.out.println("接收数据:"+s);
+
+
         }
-        /* 当有客户端连接时将客户端添加至客户端列表中 <集合> */
+
         /* 当收到客户端信息时，校验消息的合法性<消息的传输协议（格式）>，通过后遍历客户端列表将信息发送给除了消息发送方以外的所有客户端 */
         /* 当有客户端断开连接时将其从客户端列表移出 */
     }
+
+//    private static void addToUserInLineList(Socket client){
+//        String hostAddress = client.getInetAddress().getHostAddress();
+//        LsUser u = new LsUser();
+//        u.setIp(hostAddress);
+//        inLineUserList.put(hostAddress,client);
+//    }
+
+
+    public void main() throws IOException {
+        InputStream in = System.in;
+        OutputStream out = new FileOutputStream(new File("sdfafa"));
+        int i;
+        while ((i = in.read())!=-1){
+            out.write(i);
+        }
+
+    }
+
+
 }
