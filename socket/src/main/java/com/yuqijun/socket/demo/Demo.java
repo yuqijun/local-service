@@ -1,9 +1,12 @@
 package com.yuqijun.socket.demo;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Demo {
     public static void main(String [] args){
         addHeap();
-        System.out.println("dfafafaf");
+        log.info("dfafafaf");
     }
 
     public static void addHeap(){
