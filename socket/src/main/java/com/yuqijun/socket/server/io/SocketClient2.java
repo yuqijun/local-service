@@ -1,17 +1,18 @@
-package com.yuqijun.socket.server;
+package com.yuqijun.socket.server.io;
 
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+
 import java.io.*;
-import java.net.*;
+import java.net.Socket;
 
 /**
  * @author yuqijun
  * TCP客户端
  */
 @Slf4j
-public class SocketClient {
+public class SocketClient2 {
 
     private  static Thread pushMsgThread ;
 

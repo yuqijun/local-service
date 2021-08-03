@@ -24,7 +24,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: uep-config-api
+    name: local-service-socket
   #    name: uep-config-api1  #本地测试
   sleuth:
     sampler:

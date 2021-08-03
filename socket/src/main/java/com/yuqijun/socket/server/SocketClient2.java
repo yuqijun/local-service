@@ -11,7 +11,7 @@ import java.net.*;
  * TCP客户端
  */
 @Slf4j
-public class SocketClient {
+public class SocketClient2 {
 
     private  static Thread pushMsgThread ;
 
