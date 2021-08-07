@@ -1,7 +1,7 @@
 package com.yuqijun.socket.server.nio;
 
 
-import io.swagger.annotations.ApiModel;
+//import io.swagger.annotations.ApiModel;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
  * 消息传输格式
  */
 
-@ApiModel(value = "MessageFormat",description = "消息传输格式")
+//@ApiModel(value = "MessageFormat",description = "消息传输格式")
 @Slf4j
 public class MessageFormat {
     /* 格式化 */
