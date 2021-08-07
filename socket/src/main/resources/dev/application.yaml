@@ -1,6 +1,5 @@
 server:
   port: 8402
-
 spring:
   rabbitmq:
     host: 101.132.143.228
@@ -11,238 +10,39 @@ spring:
   redis:
     host: 101.132.143.228
     password: 123456
-  #  redis:
-  #    cluster:
-  #      nodes: 10.10.101.13:6379,10.10.101.13:6380,10.10.101.13:6381,10.10.101.13:6382,10.10.101.13:6383,10.10.101.13:6384
-  #      max-redirects: 6
-  #    lettuce:
-  #      pool:
-  #        max-idle: 16
-  #        max-active: 32
-  #        min-idle: 8
-  #    password: lbtest
   main:
     allow-bean-definition-overriding: true
   application:
     name: local-service-socket
-  #    name: uep-config-api1  #本地测试
-  sleuth:
-    sampler:
-      probability: 50
-  #  zipkin:
-  #    enabled: false
-  #    sender:
-  #      type: kafka
-  #    kafka:
-  #      topic: zipkin
-  kafka:
-    bootstrap-servers: 10.10.101.104:9092,10.10.101.105:9092,10.10.101.106:9092
-  cloud:
-    bootstrap:
-      enabled: false
-    nacos:
-      discovery:
-        server-addr: 10.10.101.116:8841
-        #        namespace: 1ac1bf46-3e85-4078-8141-f45e0f685e3c   #测试环境
-        namespace: 633ba924-8d59-46fc-a1e7-7abccce44a1a
-        cluster-name: yuqijun-cluster
-        metadata:
-          version: v1
-    sentinel:
-      transport:
-        port: 8719
-        dashboard: 10.10.101.114:8081
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://10.10.230.4:3307/uep?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-    username: uep
-    password: uep@com
-    #    driver-class-name: com.mysql.jdbc.Driver
-    #    url: jdbc:mysql://101.132.143.228:3306/uep2?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-    #    userName: root
-    #    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/uep?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
     druid:
       max-active: 200
       filter:
         config:
           enabled: true
-
-
 mybatis-plus:
-  mapper-locations: classpath*:com/ane56/uep/config/mapper/*Mapper.xml
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-#Feign和resttemplate启用Sentinel的支持
-resttemplate:
-  sentinel:
-    enabled: true
-
+  mapper-locations: classpath*:com/yuqijun/socket/dao/*Mapper.xml
 app:
-  #  id: uep-config-api
   id: ${spring.application.name}
 apollo:
-  meta: http://10.10.101.110:8080
+  meta: http://127.0.0.1:8080
   bootstrap:
-    namespaces: application,Architecture.log4j2-public
-    # will inject 'application' namespace in bootstrap phase
-    #    enabled: false
-    enabled: true
-    eagerLoad.enabled: true
-
+    namespaces: application
+    enabled: false
+    eagerLoad.enabled: false
 eureka:
   client:
     enabled: false
-
-hystrix:
-  threadpool:
-    default:
-      #最大排队长度
-      #maxQueueSize: -1
-      maximumSize: 1000
-      #线程池数量
-      coreSize: 1000
-  command:
-    default:
-      circuitBreaker:
-        #出错百分比阈值，当达到此阈值后，开始短路。默认50%
-        errorThresholdPercentage: 10
-        #当在配置时间窗口内达到此数量的失败后，进行短路。默认20个
-        requestVolumeThreshold: 20
-        #短路多久以后开始尝试是否恢复，默认5s
-        sleepWindowInMilliseconds: 5000
-      metrics:
-        rollingStats:
-          #时间窗 单位毫秒
-          timeInMilliseconds: 60000
-      execution:
-        timeout:
-          enabled: true
-        isolation:
-          thread:
-            timeoutInMilliseconds: 5000  #发生熔断的超时时间
-            #            strategy: SEMAPHORE   #隔离策略
-            semaphore:
-              max-semaphores: 2001 #信号量大小
-              maxConcurrentRequests: 2001
-
-ribbon:
-  #读取超时时间
-  ReadTimeout: 20000
-  #链接超时时间
-  ConnectTimeout: 20000
-  #最大连接总数
-  MaxTotalConnections: 2000
-  #最大HTTP连接总数
-  MaxTotalHttpConnections: 2000
-  #每个主机的最大连接数
-  MaxConnectionsPerHost: 2000
-  #最大工作线程数
-  PoolMaxThreads: 2000
-  #MaxAutoRetriesNextServer: 1
-  #MaxAutoRetries: 1
-  MaxHttpConnectionsPerHost: 2000
-
-feign:
-  #  hystrix:
-  #  #    #关闭hystrix
-  #    enabled: true
-  sentinel:
-    enabled: true
-  httpclient:
-    # 是否开启 Http Client
-    enabled: true
-    # 最大连接数，默认：200
-    max-connections: 2000
-    # 最大路由，默认：50
-    max-connections-per-route: 1000
-
-kylin:
-  ipWhitelist: 127
-  redisson:
-    cluster:
-      - redis://10.10.101.13:6379
-      - redis://10.10.101.13:6380
-      - redis://10.10.101.13:6381
-      - redis://10.10.101.13:6382
-      - redis://10.10.101.13:6383
-      - redis://10.10.101.13:6384
-    enabled: false
-    mode: 3
-    password: lbtest
-  systemName: uep-config-api
-  swagger:
-    enabled: true
-    title: uep 配置中心
-    description: uep 配置中心
-    version: 1.0.0
-    basePackage: com.ane56.uep.config.controller
-  ribbon:
-    enabled: true
-    retryCount: 10
-  #    #ip路由策略，不配或匹配失败 则根据上一个验证进行轮询
-  #    rule:
-  #      uep:
-  #        calling: 192.168.9.79
-  #        provider: 192.168.9.79
-  security:
-    errorDetailEnabled: true
-  #是否开启请求耗时日志
-  requestConsumingTime:
-    enabled: true
-
-
   cors:
-    #开启本地跨域模式，仅开发模式
-    #    enabled: false
     enabled: treu
-  #  security:
-  #    enabled: false
-  #关闭内部代理功能，默认为true
   internal-agent:
     enabled: false
-  #模拟本地用户信息，只有关闭内部代理，该参数才会生效
-  mockAuthUser: '{"userId":"00103207","loginName":"zhujun","userName": "朱俊","siteId": "25","siteCode": "999999","siteName": "总部","appId": "uep"}'
-  fictitiousAuthUser: '{"userId":"00103207","loginName":"zhujun","userName": "朱俊","siteId": "25","siteCode": "999999","siteName": "总部","appId": "uep"}'
-liases-package: org.spring.boot.po
-
-#pagehelper分页插件配置
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  #params: count=countSql
-
-jasypt:
-  encryptor:
-    password: efewfwDFEWF12WE
-
-uep:
-  applicationId: uep
-  applicationName: 统一导出平台
-  modularId: 8402
-  modularName: 配置模块
-
-
-management:
-  health:
-    elasticsearch:
-      enabled: false
-    rabbit:
-      enabled: false
-  endpoints:
-    web:
-      exposure:
-        #加载所有的端点，默认只加载了info、health
-        include: '*'
-  endpoint:
-    health:
-      show-details: always
-    #可以关闭指定的端点
-    shutdown:
-      enabled: false
-ogging:
+logging:
   level:
     root: info # 根日志，默认级别是info，如果使用info，可以不写这一行
     com.moyundong.dao: debug # 子级别日志，可以指定到自己的某个包
