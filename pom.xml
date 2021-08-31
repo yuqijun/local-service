@@ -9,6 +9,7 @@
 		<module>local-service-socket</module>
 		<module>local-service-common</module>
 		<module>local-service-consumer</module>
+		<module>local-service-store</module>
 	</modules>
 
 	<parent>
@@ -33,6 +34,13 @@
 			<groupId>com.basic.webapi</groupId>
 			<artifactId>webapi</artifactId>
 			<version>1.0.0</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4.1212</version>
 		</dependency>
 	</dependencies>
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="false">
+<configuration  status="OFF">
+    <Property name="LEVEL">debug</Property>
     <!--定义日志文件的存储地址目录 -->
     <property name="LOG_HOME" value="/Users/yuqijun/yuqijun/local-service-log/log" />
 
@@ -68,7 +69,7 @@
     </appender>
 
     <!-- 根日志输出级别 -->
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
         <appender-ref ref="HtmlFile" />

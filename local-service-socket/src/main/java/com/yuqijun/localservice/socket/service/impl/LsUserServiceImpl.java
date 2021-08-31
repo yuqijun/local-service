@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.yuqijun.localservice.socket.service.LsUserService;
 
+import java.time.LocalDateTime;
+
 @Service
 public class LsUserServiceImpl extends ServiceImpl<LsUserMapper,LsUser> implements LsUserService  {
 
@@ -28,15 +30,19 @@ public class LsUserServiceImpl extends ServiceImpl<LsUserMapper,LsUser> implemen
     public boolean register(LsUser user) {
         /* 密码加密 */
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        user.setLoginPassword( bCryptPasswordEncoder.encode(user.getLoginPassword()));
-        user.setId(IdWorker.getIdStr());
+        user.setPassword( bCryptPasswordEncoder.encode(user.getPassword()));
+        String id = IdWorker.getIdStr();
+        user.setCreateUserId(id);
+        user.setUpdateUserId(id);
+        user.setCreateTime(LocalDateTime.now());
+        user.setUpdateTime(LocalDateTime.now());
         return mapper.insert(user)>0;
     }
 
     @Override
     public ResponseResult<Object> login(LsUser user) {
         LambdaQueryWrapper<LsUser> query = new LambdaQueryWrapper<>();
-        query.eq(LsUser::getLoginAccount,user.getLoginAccount());
+        query.eq(LsUser::getLoginName,user.getLoginName());
         LsUser lander = mapper.selectOne(query);
 
         if(null == lander){
@@ -48,8 +54,8 @@ public class LsUserServiceImpl extends ServiceImpl<LsUserMapper,LsUser> implemen
         /* 判断密码是否正确 */
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-        String t1 = user.getLoginPassword();
-        String t2 = lander.getLoginPassword();
+        String t1 = user.getPassword();
+        String t2 = lander.getPassword();
 
         if(bCryptPasswordEncoder.matches(t1,t2)){
             /*

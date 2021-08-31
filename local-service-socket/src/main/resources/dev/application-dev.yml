@@ -1,12 +1,21 @@
 server:
   port: 8080
 spring:
+  data:
+    elasticsearch:
+      cluster-name: docker-cluster
+      cluster-nodes: 127.0.0.1:9300
+      repositories:
+        enabled: true
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/ls?
-    username: root
+#    url: jdbc:mysql://127.0.0.1:3306/ls?
+    url: jdbc:postgresql://127.0.0.1:5432/eat
+#    username: root
+    username: postgres
     password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.postgresql.Driver
 
     thymeleaf:
       #模板的模式，支持 HTML, XML TEXT JAVASCRIPT
