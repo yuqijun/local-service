@@ -12,5 +12,5 @@ public interface LsUserService extends IService<LsUser> {
 
     /* 用户登录 */
 
-    ResponseResult<Object> login(LsUser  user);
+    LsUser login(LsUser  user);
 }

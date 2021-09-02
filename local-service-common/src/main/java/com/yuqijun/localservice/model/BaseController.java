@@ -26,14 +26,14 @@ public class BaseController<T> {
 
     public ResponseResult Fail(){
         ResponseResult result = new ResponseResult();
-        result.setCode(0);
+        result.setCode(-1);
         result.setMsg("-系统发生异常");
         return result;
     }
 
     public ResponseResult Fail(String msg){
         ResponseResult result = new ResponseResult();
-        result.setCode(0);
+        result.setCode(-1);
         result.setMsg(msg);
         return result;
     }

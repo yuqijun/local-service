@@ -30,25 +30,28 @@ public class LsUserServiceImpl extends ServiceImpl<LsUserMapper,LsUser> implemen
     public boolean register(LsUser user) {
         /* 密码加密 */
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        user.setPassword( bCryptPasswordEncoder.encode(user.getPassword()));
-        String id = IdWorker.getIdStr();
-        user.setCreateUserId(id);
-        user.setUpdateUserId(id);
-        user.setCreateTime(LocalDateTime.now());
-        user.setUpdateTime(LocalDateTime.now());
-        return mapper.insert(user)>0;
+
+        String secret = bCryptPasswordEncoder.encode(user.getPassword());
+        if(bCryptPasswordEncoder.matches(user.getPassword(),secret)){
+            user.setPassword(secret);
+            String id = IdWorker.getIdStr();
+            user.setCreateUserId(id);
+            user.setUpdateUserId(id);
+            user.setCreateTime(LocalDateTime.now());
+            user.setUpdateTime(LocalDateTime.now());
+            return mapper.insert(user)>0;
+        }
+        return false;
     }
 
     @Override
-    public ResponseResult<Object> login(LsUser user) {
+    public LsUser login(LsUser user) {
         LambdaQueryWrapper<LsUser> query = new LambdaQueryWrapper<>();
         query.eq(LsUser::getLoginName,user.getLoginName());
         LsUser lander = mapper.selectOne(query);
 
         if(null == lander){
-            return ResponseResult.builder()
-                    .code(0)
-                    .msg("该账号不存在").build();
+            return null;
         }
 
         /* 判断密码是否正确 */
@@ -57,27 +60,17 @@ public class LsUserServiceImpl extends ServiceImpl<LsUserMapper,LsUser> implemen
         String t1 = user.getPassword();
         String t2 = lander.getPassword();
 
-        if(bCryptPasswordEncoder.matches(t1,t2)){
+        if(!bCryptPasswordEncoder.matches(t1,t2)){
             /*
             *  返回登陆结果信息
             *  将信息丢入RabbitMq队列，异步与服务端建立连接
             * */
 
 
-
-            return ResponseResult.builder()
-                    .code(0)
-                    .msg("请求成功")
-                    .build();
-        }else{
-            /*
-            *  返回登陆结果信息
-            * */
-            return ResponseResult.builder()
-                    .code(0)
-                    .msg("密码错误")
-                    .build();
+            return null;
         }
+
+        return lander;
 
     }
 

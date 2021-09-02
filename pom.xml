@@ -45,30 +45,6 @@
 	</dependencies>
 
 
-<!--	<build>-->
-<!--		<finalName>${project.artifactId}</finalName>-->
-<!--		<plugins>-->
-<!--			<plugin>-->
-<!--				<groupId>org.springframework.boot</groupId>-->
-<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--			</plugin>-->
-<!--		</plugins>-->
-<!--		<resources>-->
-<!--			<resource>-->
-<!--				<directory>src/main/java</directory>-->
-<!--				<includes>-->
-<!--					&lt;!&ndash;将mybatis的xml文件打包进来&ndash;&gt;-->
-<!--					<include>**/*.xml</include>-->
-<!--				</includes>-->
-<!--				<filtering>false</filtering>-->
-<!--			</resource>-->
-<!--			<resource>-->
-<!--				<targetPath>${project.build.directory}/classes</targetPath>-->
-<!--				<directory>src/main/resources/${package.environment}</directory>-->
-<!--				<filtering>true</filtering>-->
-<!--			</resource>-->
-<!--		</resources>-->
-<!--	</build>-->
 
 	<build>
 		<plugins>
