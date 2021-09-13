@@ -10,8 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @EnableApolloConfig
 @MapperScan( "com.yuqijun.localservice.socket.dao")
-public class Application {
+public class SocketApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(SocketApplication.class, args);
     }
 }
