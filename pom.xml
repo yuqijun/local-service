@@ -10,7 +10,8 @@
 		<module>local-service-common</module>
 		<module>local-service-consumer</module>
 		<module>local-service-store</module>
-	</modules>
+        <module>authentication</module>
+    </modules>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

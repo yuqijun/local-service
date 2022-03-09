@@ -1,11 +1,11 @@
 server:
-  port: 8082
+  port: 8081
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/ls?
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:5432/ls?
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
 
   rabbitmq:
     host: 127.0.0.1
@@ -16,9 +16,9 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: local-service-socket
+    name: local-service-authentication
 mybatis-plus:
-  mapper-locations: classpath*:com/yuqijun/socket/dao/*Mapper.xml
+#  mapper-locations: classpath*:com/yuqijun/socket/dao/*Mapper.xml
 
   global-config:
     #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
