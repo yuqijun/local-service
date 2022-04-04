@@ -1,5 +1,6 @@
 package com.yuqijun.localservice.socket.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuqijun.localservice.model.LsUser;
 import com.yuqijun.localservice.model.ResponseResult;
 import com.yuqijun.localservice.socket.dao.LsUserMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +18,7 @@ import com.yuqijun.localservice.socket.service.LsUserService;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 @Service
 public class LsUserServiceImpl extends ServiceImpl<LsUserMapper,LsUser> implements LsUserService  {
 
@@ -69,7 +72,7 @@ public class LsUserServiceImpl extends ServiceImpl<LsUserMapper,LsUser> implemen
 
             return null;
         }
-
+        log.info("登录用户信息:{}", JSON.toJSONString(lander));
         return lander;
 
     }

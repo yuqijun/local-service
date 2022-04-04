@@ -1,13 +1,32 @@
 server:
-  port: 8084
+  port: 8080
 spring:
-  datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/eat?stringtype=unspecified
-    username: postgres
+  es:
+    host: 10.10.104.85
+    port: 9200
+    username: elastic
     password: 123456
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ls?
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
+
+    thymeleaf:
+      #模板的模式，支持 HTML, XML TEXT JAVASCRIPT
+      mode: HTML5
+      #编码 可不用配置
+      encoding: UTF-8
+      #内容类别,可不用配置
+      content-type: text/html
+      #开发配置为false,避免修改模板还要重启服务器
+      cache: false
+      #配置模板路径，默认是templates，可以不用配置
+      prefix: classpath:/templates
+
+
   rabbitmq:
-    host: 127.0.0.1
+    host: 101.132.143.228
     port: 5672
     userName: guest
     password: guest
@@ -15,9 +34,9 @@ spring:
   main:
     allow-bean-definition-overriding: true
   application:
-    name: local-service-store
+    name: local-service-socket
 mybatis-plus:
-  mapper-locations: classpath*:com/yuqijun/localservice/store/mapper/*Mapper.xml
+  mapper-locations: classpath*:com/yuqijun/socket/dao/*Mapper.xml
 
   global-config:
     #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
@@ -68,3 +87,8 @@ logging:
     root: info # 根日志，默认级别是info，如果使用info，可以不写这一行
     com.moyundong.dao: debug # 子级别日志，可以指定到自己的某个包
   file: /Users/yuqijun/yuqijun/local-service-log/log # 定义日志文件的路径，可以是相对路径也可以是绝对路径
+
+kylin:
+  mqmonitorlog:
+    switch: true
+    msgSwitch: true

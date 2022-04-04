@@ -1,15 +1,9 @@
 package com.yuqijun.localservice.socket.controller;
 
-
-
-import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.yuqijun.localservice.apiPrameterValidata.LoginValidate;
 import com.yuqijun.localservice.apiPrameterValidata.RegisterValidate;
 import com.yuqijun.localservice.model.BaseController;
 import com.yuqijun.localservice.model.LsUser;
-import com.yuqijun.localservice.model.ResponseResult;
-//import com.yuqijun.localservice.socket.es.KylinMQMonitorLogsMapper;
-//import com.yuqijun.localservice.socket.model.KylinMQMonitorLogs;
 import com.yuqijun.localservice.socket.service.impl.LsUserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -18,10 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.concurrent.ThreadPoolExecutor;
+
 
 @Slf4j
 @RestController
@@ -30,9 +23,6 @@ public class LoginController extends BaseController {
 
     @Resource
     private LsUserServiceImpl userService;
-
-//    @Autowired
-//    private KylinMQMonitorLogsMapper mapper;
 
     @Autowired
     private ConnectionFactory connectionFactory;
@@ -72,19 +62,6 @@ public class LoginController extends BaseController {
         return mv;
     }
 
-//    @PostMapping(value = "/savelog")
-//    public Object saveLog(){
-//        KylinMQMonitorLogs logs = new KylinMQMonitorLogs();
-//        logs.setCost(13213131l);
-//        logs.setAppId("天象");
-//        logs.setCreateTime(System.currentTimeMillis());
-//        logs.setId(IdWorker.getIdStr());
-//        logs.setQueueName("max_queue");
-//
-//        KylinMQMonitorLogs save = mapper.save(logs);
-////        log.info("save 返回值 ："+ JSONUtils.toJSONString(save));
-//        return  save;
-//    }
 
     public static  void main (String [] args){
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -99,8 +76,11 @@ public class LoginController extends BaseController {
         log.info("对比 ："+bCryptPasswordEncoder.matches(str,mstr));
 
 
+        String encode = bCryptPasswordEncoder.encode(str);
+        log.info("密文2：{}",encode);
+        log.info("对比 2:{}",bCryptPasswordEncoder.matches(str,encode));
+
 
     }
-
 
 }

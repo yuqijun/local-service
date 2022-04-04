@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-@EnableApolloConfig
+//@EnableApolloConfig
 @MapperScan( "com.yuqijun.localservice.socket.dao")
 public class SocketApplication {
     public static void main(String[] args) {

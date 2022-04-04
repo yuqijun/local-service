@@ -6,6 +6,6 @@
 
 
     <select id="getIndexPageData" resultType="com.yuqijun.localservice.model.dao.LsStore">
-        SELECT logo_avatar , store_id , store_name , store_source , store_sales_volume , description,telephone FROM tb_store
+        SELECT avatar , store_id , store_name , store_source , store_sales_volume , description,telephone FROM tb_store
     </select>
 </mapper>
