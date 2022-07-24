@@ -25,5 +25,4 @@ public class GoodsController extends BaseController {
     public ResponseResult storeGoodsList(@RequestBody @Validated(StoreGoodsListValidate.class) GoodsQuery query){
         return Success(lsGoodsService.getIndexPageData(query.getStoreId()));
     }
-
 }
